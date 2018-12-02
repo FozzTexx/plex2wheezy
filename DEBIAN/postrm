@@ -1,0 +1,11 @@
+#!/bin/sh
+set -e
+# Automatically added by dh_makeshlibs
+if [ "$1" = "remove" ]; then
+	ldconfig
+fi
+if [ "$1" = "purge" ]; then
+	deluser plex
+	rm -r /var/lib/plexmediaserver
+fi
+# End automatically added section

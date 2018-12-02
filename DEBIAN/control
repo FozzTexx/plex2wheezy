@@ -1,0 +1,10 @@
+Package: plexmediaserver
+Version: 1.9.5.4339-46276db8d-debian
+Architecture: amd64
+Maintainer: FozzTexx <fozztexx@fozztexx.com>
+Depends: avahi-daemon, avahi-utils
+Section: video
+Priority: extra
+Homepage: http://www.plex.tv
+Description: Plex Media Server for Linux
+  Stream media everywhere(tm)

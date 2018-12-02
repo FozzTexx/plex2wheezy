@@ -1,0 +1,35 @@
+#!/bin/sh
+case "$1" in
+	configure)
+		group='plex'
+		user='plex'
+		if id -u "$user" >/dev/null 2>&1; then
+			echo "plex user exists now checking for group"
+
+		else
+			adduser --quiet --system --shell /bin/bash --home /var/lib/plexmediaserver $user --group
+		fi
+		if 
+			grep -q -E "$group(,.*|\b)" /etc/group; then
+			echo 'Group plex exists proceeding with installation'
+		else
+			groupadd plex
+			usermod -g $group $user
+			echo 'Setting correct permissions on plexmediaserver home, (this will take a long time depending on your library size!)'
+			chown plex:plex /var/lib/plexmediaserver/ -R
+		fi
+		update-rc.d plexmediaserver defaults
+		/etc/init.d/plexmediaserver stop
+		/etc/init.d/plexmediaserver start
+		;;
+
+	abort-upgrade|abort-remove|abort-deconfigure)
+		;;
+
+	*)
+		echo "postinst called with unknown argument \`$1'" >&2
+		exit 1
+		;;
+esac
+
+exit 0
