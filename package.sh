@@ -17,10 +17,14 @@ wget -N "${DIRECT}"
 mkdir dist
 dpkg -x "${PKG}" dist
 mkdir -p wheezy/etc/default wheezy/etc/init.d
-sed -e 's/\(# *\)\?export //' dist/etc/default/plexmediaserver > wheezy/etc/default/plexmediaserver
 cp ../init.d-plexmediaserver wheezy/etc/init.d/plexmediaserver
 chmod +x wheezy/etc/init.d/plexmediaserver
 rsync -a ../DEBIAN wheezy/.
+if [ -e dist/etc/default/plexmediaserver ] ; then
+    sed -e 's/\(# *\)\?export //' dist/etc/default/plexmediaserver > wheezy/etc/default/plexmediaserver
+else
+    sed -i -e '/\/etc\/default\/plexmediaserver/d' wheezy/DEBIAN/conffiles
+fi
 sed -i -e 's/^Version:.*/Version: '"${VERSION}"/ wheezy/DEBIAN/control
 mv dist/usr wheezy/.
 dpkg-deb --build wheezy
