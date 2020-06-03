@@ -19,6 +19,9 @@ dpkg -x "${PKG}" dist
 mkdir -p wheezy/etc/default wheezy/etc/init.d
 cp ../init.d-plexmediaserver wheezy/etc/init.d/plexmediaserver
 chmod +x wheezy/etc/init.d/plexmediaserver
+mkdir -p wheezy/usr/sbin
+cp ../start_pms wheezy/usr/sbin
+chmod +x wheezy/usr/sbin/start_pms
 rsync -a ../DEBIAN wheezy/.
 if [ -e dist/etc/default/plexmediaserver ] ; then
     sed -e 's/\(# *\)\?export //' dist/etc/default/plexmediaserver > wheezy/etc/default/plexmediaserver
